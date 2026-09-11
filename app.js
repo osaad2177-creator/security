@@ -109,10 +109,7 @@ form.addEventListener("submit", async (e) => {
     formMessage.textContent = "من فضلك اختر مكان العمل.";
     return;
   }
-  if (!capturedLocation) {
-    formMessage.textContent = "لا يمكن إرسال الطلب بدون الموافقة على مشاركة الموقع.";
-    return;
-  }
+  
   if (!consentCheckbox.checked) {
     formMessage.textContent = "يجب الموافقة على مشاركة البيانات والموقع أولاً.";
     return;
