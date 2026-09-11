@@ -45,7 +45,13 @@
           </select>
         </div>
 
-        
+        <div class="field">
+          <label>الموقع الجغرافي</label>
+          <p id="locationStatus" class="location-status">جاري تحديد موقعك...</p>
+          <button type="button" id="locateBtn" class="btn btn-outline" hidden>
+            <span class="icon">📍</span> إعادة محاولة تحديد الموقع
+          </button>
+        </div>
 
         <div class="field checkbox-field">
           <label class="checkbox-label">
@@ -56,7 +62,7 @@
 
         <p id="formMessage" class="form-message" role="alert"></p>
 
-        <button type="submit" id="submitBtn" class="btn btn-primary" disabled>إرسال الطلب</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary">إرسال الطلب</button>
       </form>
 
       <div id="successMessage" class="success-message" hidden>
