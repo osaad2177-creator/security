@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power Security للخدمات الأمنية | تقديم للعمل فرد أمن</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">PS</span>
+      <span class="brand-name">Power Security <small>للخدمات الأمنية</small></span>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <h1>تقديم للعمل فرد أمن</h1>
+      <p class="salary">الراتب <strong>15,000</strong> جنيه شهريًا + سكن و وجبات</p>
+    </section>
+
+    <section class="card">
+      <form id="applyForm" novalidate>
+
+        <div class="field">
+          <label for="fullName">الاسم بالكامل <span class="req">*</span></label>
+          <input type="text" id="fullName" name="fullName" placeholder="اكتب اسمك بالكامل" required autocomplete="name">
+        </div>
+
+        <div class="field">
+          <label for="phone">رقم الهاتف <span class="req">*</span></label>
+          <input type="tel" id="phone" name="phone" placeholder="01xxxxxxxxx" required autocomplete="tel" inputmode="numeric" maxlength="11">
+          <span class="hint" id="phoneHint"></span>
+        </div>
+
+        <div class="field">
+          <label for="workLocation">مكان العمل <span class="req">*</span></label>
+          <select id="workLocation" name="workLocation" required>
+            <option value="" disabled selected>اختر مكان العمل</option>
+            <option value="الساحل الشمالي">الساحل الشمالي</option>
+            <option value="شرم الشيخ">شرم الشيخ</option>
+            <option value="العين السخنة">العين السخنة</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>الموقع الجغرافي <span class="req">*</span></label>
+          <button type="button" id="locateBtn" class="btn btn-outline">
+            <span class="icon">📍</span> تحديد موقعي الحالي
+          </button>
+          <p id="locationStatus" class="location-status">لم يتم تحديد الموقع بعد</p>
+        </div>
+
+        <div class="field checkbox-field">
+          <label class="checkbox-label">
+            <input type="checkbox" id="consent" name="consent" required>
+            <span>أوافق على مشاركة بياناتي وموقعي التقريبي مع شركة Power Security لأغراض التوظيف فقط.</span>
+          </label>
+        </div>
+
+        <p id="formMessage" class="form-message" role="alert"></p>
+
+        <button type="submit" id="submitBtn" class="btn btn-primary" disabled>إرسال الطلب</button>
+      </form>
+
+      <div id="successMessage" class="success-message" hidden>
+        <span class="success-icon">✔</span>
+        <p>تم إرسال طلبك بنجاح، سنتواصل معك قريبًا.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Power Security للخدمات الأمنية</p>
+  </footer>
+
+<script src="app.js"></script>
+</body>
+</html>
