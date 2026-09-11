@@ -190,9 +190,13 @@ select:focus{
 .btn-primary:not(:disabled):active{ opacity: 0.85; }
 
 .location-status{
-  font-size: 13px;
+  font-size: 14px;
   color: var(--grey-text);
-  margin: 8px 0 0;
+  margin: 0 0 10px;
+}
+
+#locateBtn{
+  margin-top: 4px;
 }
 
 .location-status.ok{
