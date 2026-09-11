@@ -2,7 +2,7 @@
 // ضع هنا رابط Google Apps Script Web App بعد نشره (انظر خطوات النشر)
 // مثال: https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec
 // =========================================================
-const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx8zI4Xf2m-nxXgZK858ta6tDtAzZP5ou6tn1lKm8Wm5j6hK7PDrTCE1jKyrEScq3mQ/exec";
 
 const form = document.getElementById("applyForm");
 const submitBtn = document.getElementById("submitBtn");
