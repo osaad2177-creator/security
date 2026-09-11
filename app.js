@@ -2,7 +2,7 @@
 // ضع هنا رابط Google Apps Script Web App بعد نشره (انظر خطوات النشر)
 // مثال: https://script.google.com/macros/s/XXXXXXXXXXXXXXXX/exec
 // =========================================================
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwWknenrHk3njuKmm5HIxC0w8Y6FpH9-LQUZe0gfEdKHTdfH7Kkxxj-hMOtX-wYpnZF/exec";
+const WEB_APP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
 
 const form = document.getElementById("applyForm");
 const submitBtn = document.getElementById("submitBtn");
@@ -29,8 +29,9 @@ function updateSubmitState() {
   submitBtn.disabled = !capturedLocation;
 }
 
-locateBtn.addEventListener("click", () => {
+function requestLocation() {
   formMessage.textContent = "";
+  locateBtn.hidden = true;
 
   if (!navigator.geolocation) {
     setLocationStatus("المتصفح لا يدعم تحديد الموقع.", "error");
@@ -40,7 +41,6 @@ locateBtn.addEventListener("click", () => {
     return;
   }
 
-  locateBtn.disabled = true;
   setLocationStatus("جاري تحديد الموقع...");
 
   navigator.geolocation.getCurrentPosition(
@@ -51,17 +51,14 @@ locateBtn.addEventListener("click", () => {
 
       capturedLocation = { lat, lng, mapsUrl };
 
-      setLocationStatus("تم تحديد موقعك بنجاح ✔", "ok");
-      locateBtn.textContent = "✔ تم تحديد الموقع";
-      locateBtn.classList.add("located");
-      locateBtn.disabled = false;
+      setLocationStatus("✔ تم تحديد الموقع", "ok");
+      locateBtn.hidden = true;
       formMessage.textContent = "";
       updateSubmitState();
     },
     (error) => {
       capturedLocation = null;
       updateSubmitState();
-      locateBtn.disabled = false;
 
       let msg = "تعذر تحديد الموقع.";
       if (error.code === error.PERMISSION_DENIED) {
@@ -69,10 +66,19 @@ locateBtn.addEventListener("click", () => {
       }
       setLocationStatus(msg, "error");
       formMessage.textContent = "لا يمكن إرسال الطلب بدون الموافقة على مشاركة الموقع.";
+
+      // نظهر زر إعادة المحاولة فقط عند الفشل أو الرفض
+      locateBtn.textContent = "إعادة محاولة تحديد الموقع";
+      locateBtn.hidden = false;
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
   );
-});
+}
+
+// نطلب الموقع تلقائيًا فور تحميل الصفحة
+requestLocation();
+
+locateBtn.addEventListener("click", requestLocation);
 
 phoneInput.addEventListener("input", () => {
   phoneInput.value = phoneInput.value.replace(/[^0-9]/g, "");
