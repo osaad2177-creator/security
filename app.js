@@ -33,13 +33,7 @@ function requestLocation() {
   formMessage.textContent = "";
   locateBtn.hidden = true;
 
-  if (!navigator.geolocation) {
-    setLocationStatus("المتصفح لا يدعم تحديد الموقع.", "error");
-    formMessage.textContent = "لا يمكن إرسال الطلب بدون الموافقة على مشاركة الموقع.";
-    capturedLocation = null;
-    updateSubmitState();
-    return;
-  }
+  
 
   setLocationStatus("جاري تحديد الموقع...");
 
@@ -64,12 +58,7 @@ function requestLocation() {
       if (error.code === error.PERMISSION_DENIED) {
         msg = "تم رفض إذن الموقع.";
       }
-      setLocationStatus(msg, "error");
-      formMessage.textContent = "لا يمكن إرسال الطلب بدون الموافقة على مشاركة الموقع.";
-
-      // نظهر زر إعادة المحاولة فقط عند الفشل أو الرفض
-      locateBtn.textContent = "إعادة محاولة تحديد الموقع";
-      locateBtn.hidden = false;
+      
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
   );
