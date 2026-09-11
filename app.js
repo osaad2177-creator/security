@@ -25,15 +25,21 @@ function setLocationStatus(text, state) {
   if (state) locationStatus.classList.add(state);
 }
 
+// الزرار شغال دايمًا، سواء اتحدد الموقع أو لأ
 function updateSubmitState() {
-  submitBtn.disabled = !capturedLocation;
+  submitBtn.disabled = false;
 }
 
 function requestLocation() {
   formMessage.textContent = "";
   locateBtn.hidden = true;
 
-  
+  if (!navigator.geolocation) {
+    setLocationStatus("المتصفح لا يدعم تحديد الموقع.", "error");
+    capturedLocation = null;
+    updateSubmitState();
+    return;
+  }
 
   setLocationStatus("جاري تحديد الموقع...");
 
@@ -58,13 +64,20 @@ function requestLocation() {
       if (error.code === error.PERMISSION_DENIED) {
         msg = "تم رفض إذن الموقع.";
       }
-      
+      setLocationStatus(msg, "error");
+
+      // نظهر زر إعادة المحاولة فقط عند الفشل أو الرفض (اختياري للمستخدم)
+      locateBtn.textContent = "إعادة محاولة تحديد الموقع";
+      locateBtn.hidden = false;
     },
     { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
   );
 }
 
-// نطلب الموقع تلقائيًا فور تحميل الصفحة
+// الزرار مفعّل من الأول
+updateSubmitState();
+
+// نطلب الموقع تلقائيًا فور تحميل الصفحة (بدون ما نوقف الإرسال لو المستخدم رفض)
 requestLocation();
 
 locateBtn.addEventListener("click", requestLocation);
@@ -98,7 +111,6 @@ form.addEventListener("submit", async (e) => {
     formMessage.textContent = "من فضلك اختر مكان العمل.";
     return;
   }
-  
   if (!consentCheckbox.checked) {
     formMessage.textContent = "يجب الموافقة على مشاركة البيانات والموقع أولاً.";
     return;
@@ -112,9 +124,11 @@ form.addEventListener("submit", async (e) => {
     payload.append("fullName", fullName);
     payload.append("phone", phone);
     payload.append("workLocation", workLocation);
-    payload.append("latitude", capturedLocation.lat);
-    payload.append("longitude", capturedLocation.lng);
-    payload.append("mapsUrl", capturedLocation.mapsUrl);
+    // لو الموقع مش متحدد (اتفضل تحميل أو المستخدم رفض الإذن) نبعت قيم فاضية
+    // بدل ما الكود يعمل كراش وميبعتش الطلب خالص
+    payload.append("latitude", capturedLocation ? capturedLocation.lat : "");
+    payload.append("longitude", capturedLocation ? capturedLocation.lng : "");
+    payload.append("mapsUrl", capturedLocation ? capturedLocation.mapsUrl : "");
 
     const response = await fetch(WEB_APP_URL, {
       method: "POST",
